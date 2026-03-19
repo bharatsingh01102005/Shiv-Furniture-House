@@ -31,7 +31,6 @@
 
 
 
-
 import express from "express";
 import { connectDB } from "./db.js";
 import { config } from "./config.js";
@@ -72,7 +71,8 @@ async function startServer() {
   try {
     console.log("Starting server...");
     console.log("MONGO_URI present:", !!config.mongoUri);
-    console.log("PORT from Render:", process.env.PORT);
+    console.log("NODE_ENV:", config.nodeEnv);
+    console.log("PORT:", process.env.PORT);
 
     await connectDB();
     await seedProductsIfEmpty();
@@ -91,7 +91,3 @@ async function startServer() {
 }
 
 startServer();
-await ensureAdminUser();
-
-const PORT = Number(config.port) || 3000;
-app.listen(PORT, () => console.log(`✅ Server running: http://localhost:${PORT}`));
