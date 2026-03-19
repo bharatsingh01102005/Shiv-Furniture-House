@@ -1,8 +1,25 @@
+
 import mongoose from "mongoose";
 import { config } from "./config.js";
 
 export async function connectDB() {
-  if (!config.mongoUri) throw new Error("MONGO_URI missing in .env");
-  await mongoose.connect(config.mongoUri);
-  console.log("✅ MongoDB connected");
+  try {
+    if (!config.mongoUri) {
+      throw new Error("MONGO_URI missing in environment");
+    }
+
+    await mongoose.connect(config.mongoUri);
+    console.log("✅ MongoDB connected");
+  } catch (error) {
+    console.error("❌ MongoDB connection error:", error);
+    throw error;
+  }
 }
+// import mongoose from "mongoose";
+// import { config } from "./config.js";
+
+// export async function connectDB() {
+//   if (!config.mongoUri) throw new Error("MONGO_URI missing in .env");
+//   await mongoose.connect(config.mongoUri);
+//   console.log("✅ MongoDB connected");
+// }
